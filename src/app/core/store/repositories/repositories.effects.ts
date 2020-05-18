@@ -46,7 +46,7 @@ export class RepositoriesEffects {
                   name: item.name,
                   stargazersCount: item.stargazers_count,
                   description: item.description,
-                  url: item.url,
+                  url: item.html_url,
                   language: item.language
                 } as IRepo;
               });
