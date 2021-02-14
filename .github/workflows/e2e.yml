@@ -1,0 +1,39 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# This workflow will install Deno and run tests across stable and nightly builds on Windows, Ubuntu and macOS.
+# For more information see: https://github.com/denolib/setup-deno
+
+name: e2e
+
+on: [push]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v2
+      
+      - name: start Selenoid
+        uses: sharekey/selenoid-github-action@v1.1
+      - name: Install dependency
+        run: npm install
+      - name: update webdriver
+        run: webdriver-manager update
+      - name: Run smoke tests
+        run: ng e2e
+
+      - name: Create Allure report
+        if: always()
+        run: npm allure-generate
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: ./e2e/allure-report/
+          retention-days: 14
