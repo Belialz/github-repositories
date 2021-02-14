@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class FavoritesGuard implements CanLoad {
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    return prompt('Password') === '1234';
+    // https://github.com/angular/protractor/issues/308
+    return true;
   }
 }
